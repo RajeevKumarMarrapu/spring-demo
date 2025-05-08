@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-projects-demo
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring-demo?useSSL=false&createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
