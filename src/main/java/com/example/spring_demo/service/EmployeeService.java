@@ -2,10 +2,10 @@ package com.example.spring_demo.service;
 
 import com.example.spring_demo.dto.EmployeeDto;
 import com.example.spring_demo.exception.EmployeeDataNotFoundException;
-import com.example.spring_demo.exception.EmployeeRecordAlreadyExistException;
 import com.example.spring_demo.mapper.EmployeeMapper;
 import com.example.spring_demo.repository.EmployeeRepository;
 import com.example.spring_demo.repository.entity.Employee;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Slf4j
 @Service
 public class EmployeeService {
     @Autowired private EmployeeRepository employeeRepository;
@@ -25,6 +26,7 @@ public class EmployeeService {
 //        }
 
         Employee result = employeeRepository.save(employeeMapper.fromEmployeeDto(employeeDto));
+        log.info("Employee record created successfully with id {}", result.getId());
         return employeeMapper.toEmployeeDto(result);
     }
 
@@ -34,6 +36,7 @@ public class EmployeeService {
         }
 
         Employee result = employeeRepository.save(employeeMapper.fromEmployeeDto(employeeDto));
+        log.info("Employee record updated successfully for id {}", result.getId());
         return employeeMapper.toEmployeeDto(result);
     }
 
@@ -43,6 +46,7 @@ public class EmployeeService {
         }
 
         employeeRepository.deleteById(employeeId);
+        log.info("Employee record deleted successfully for id {}", employeeId);
     }
 
     public EmployeeDto getEmployee(Long employeeId) {

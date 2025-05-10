@@ -4,8 +4,7 @@ import com.example.spring_demo.dto.ErrorDetails;
 import com.example.spring_demo.exception.EmployeeDataNotFoundException;
 import com.example.spring_demo.exception.EmployeeRecordAlreadyExistException;
 import com.example.spring_demo.exception.ValidationException;
-import jakarta.servlet.ServletException;
-import org.springframework.core.NestedExceptionUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 
+@Slf4j
 @ControllerAdvice
 public class CustomExceptionHandler {
     @ExceptionHandler(EmployeeDataNotFoundException.class)
@@ -41,6 +41,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<List<ErrorDetails>> handleDuplicateEmployeeRecord(ValidationException ex) {
+        log.error("handleDuplicateEmployeeRecord", ex);
         return ResponseEntity.badRequest()
                 .body(
                         ex.getErrors()
@@ -49,6 +50,7 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDetails> hanldeAnyRuntimeExceptions(RuntimeException ex) {
+        log.error("hanldeAnyRuntimeExceptions", ex);
         return ResponseEntity.internalServerError()
                 .body(
                         ErrorDetails.builder()
